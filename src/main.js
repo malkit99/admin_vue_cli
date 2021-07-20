@@ -7,6 +7,7 @@ import VueMask from 'v-mask'
 import VueRouter from 'vue-router'
 import vco from "v-click-outside"
 import router from './router/index'
+import can from "./helpers/can"
 import Scrollspy from 'vue2-scrollspy';
 import VueSweetalert2 from 'vue-sweetalert2';
 import { ValidationProvider } from 'vee-validate/dist/vee-validate.full.esm'
@@ -60,6 +61,7 @@ Vue.config.productionTip = false
 Vue.use(BootstrapVue)
 Vue.use(Vuelidate)
 Vue.use(VueMask)
+Vue.prototype.$can = can
 Vue.use(require('vue-chartist'))
 Vue.use(VueSweetalert2);
 Vue.use(Notifications)

@@ -23,6 +23,10 @@ export const getters = {
         return !!state.currentUser
     },
 
+    user(state){
+       return state.currentUser.user
+    },
+
     getToken(state){
         return state.token
     }

@@ -2,13 +2,19 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import VueMeta from 'vue-meta'
 
-import routes from './routes'
+import dashboard from './routes/dashboard'
+import lead from './routes/lead'
+import student from './routes/student'
+import course from './routes/course'
 
 Vue.use(VueRouter)
 Vue.use(VueMeta, {
   // The component option name that vue-meta looks for meta info on.
   keyName: 'page',
 })
+
+const baseRoutes = [];
+const routes = baseRoutes.concat( dashboard , lead , student , course );
 
 const router = new VueRouter({
   routes,

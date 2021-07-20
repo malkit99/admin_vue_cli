@@ -3,9 +3,12 @@
 // as the camelCase equivalent of their file name.
 
 import camelCase from 'lodash/camelCase'
-
+import master from "./master/index"
+import enquiry from "./enquiry/index"
+import student from "./student/index"
+import course from "./course/index"
 const modulesCache = {}
-const storeData = { modules: {} }
+const storeData = { modules: {master, enquiry, student , course} }
 
 ;(function updateModules() {
   // Allow us to dynamically require all Vuex module files.

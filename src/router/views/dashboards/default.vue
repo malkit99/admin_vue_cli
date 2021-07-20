@@ -142,7 +142,7 @@ export default {
 
     <div class="row">
       <div class="col-xl-4">
-        <div class="card">
+        <div class="card" v-if="$can('view-dashboard')">
           <div class="card-body">
             <h4 class="card-title mb-4">Social Source</h4>
             <div class="text-center">
