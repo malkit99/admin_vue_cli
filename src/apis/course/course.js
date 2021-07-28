@@ -4,10 +4,13 @@ export default {
     getCourses(search){
         return Api().get('/course?page='
         + search.pageNumber
-        +'&page[limit]='+search.perPage
         +'&filter[standard_id]='+search.standard_id
         +'&filter[course_name]='+search.course_name
         )
+    },
+
+    getBatches(search){
+        return Api().get('/batch?page='+search.pageNumber)
     },
 
     getStandards(search){

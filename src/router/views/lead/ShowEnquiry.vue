@@ -1,6 +1,30 @@
 <template>
   <Layout>
     <PageHeader :title="title" :items="items" />
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="row">
+                <div class="col-lg-12">
+                   <b-card title="Malkit Singh">
+                       <b-card-body>
+
+                       </b-card-body>
+                   </b-card>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-8">
+            <div class="row">
+                <div class="col-lg-12">
+                   <b-card title="Malkit Singh">
+                       <b-card-body>
+
+                       </b-card-body>
+                   </b-card>
+                </div>
+            </div>
+        </div>
+    </div>
   </Layout>
 </template>
 <script>

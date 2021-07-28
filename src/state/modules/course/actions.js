@@ -1,5 +1,17 @@
 import course from "../../../apis/course/course"
 export default {
+    getAllBatches({commit} , search ){
+        return new Promise((resolve , reject) => {
+            course.getBatches(search)
+            .then((response) => {
+                commit('SET_ALL_BATCHES' , response.data)
+                resolve(response);
+            })
+            .catch((error) => {
+                reject(error);
+            })
+        })
+    },
     getAllCourses({commit} , search ){
         return new Promise((resolve , reject) => {
             course.getCourses(search)

@@ -17,4 +17,6 @@ export default {
     semsters:[{ id : 1 , name : 'Sem-1' }, { id : 2 , name : 'Sem-2' }, { id : 3 , name : 'Sem-3' }, { id : 4 , name : 'Sem-4' },{ id : 5 , name : 'Sem-5' } ,{ id : 6 , name : 'Sem-6' }],
     sessions:[{ id : 1 , name : '2021-2022' }, { id : 2 , name : '2019-2020' }, { id : 3 , name : '2018-2019' }, { id : 4 , name : '2017-2016' },{ id : 5 , name : '2015-2016' } ,{ id : 6 , name : '2014-2015' }],
     durations:[{ id : 1 , name : '15 Days' , days: 15 }, { id : 2 , name : '30 Days' , days: 30 }, { id : 3 , name : '45 Days' , days: 45 }, { id : 4 , name : '60 Days' , days: 60 },{ id : 5 , name : '90 Days' , days: 90 },{ id : 6 , name : '180 Days' , days: 180 },{ id : 7 , name : '365 Days' , days: 365 },],
+    batchStatus:[{ id : 1 , name : 'Active' , days: 15 }, { id : 2 , name : 'Completed' , days: 30 }, { id : 3 , name : 'Quiet' , days: 45 }],
+    batchTypes:[{ id : 1 , name : 'Student' , days: 15 }, { id : 2 , name : 'Demo' , days: 30 }, { id : 3 , name : 'Employee' , days: 45 }, { id : 4 , name : 'Skill Development' , days: 60 }],
 }

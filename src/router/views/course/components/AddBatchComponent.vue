@@ -1,21 +1,21 @@
 <template>
     <div class="row">
-        <b-card title="Create Course">
+        <b-card title="Create Batch">
             <b-card-body>
-                <ValidationObserver ref="courseForm" v-slot="{ passes}">
-                            <b-form  @submit.prevent="passes(saveCourse)" @reset="resetForm" >
+                <ValidationObserver ref="batchForm" v-slot="{ passes}">
+                            <b-form  @submit.prevent="passes(saveBatch)" @reset="resetForm" >
                                 <div class="container">
                                     <div class="row">
                                     <!-- col start -->
-                                        <div class="col-md-5">
-                                        <ValidationProvider  vid="course_name" rules="required" name="Short Course Name" v-slot="{ valid, errors  }">
-                                                    <b-form-group id="shortCourseName" label="Short Course Name" label-for="shortCourseName">
+                                        <div class="col-md-4">
+                                        <ValidationProvider  vid="display_name" rules="" name="Short Course Name" v-slot="{ valid, errors  }">
+                                                    <b-form-group id="batchDisplayName" label="Display Name" label-for="batchDisplayName">
                                                         <b-form-input
-                                                        id="shortCourseName"
-                                                        v-model="editedItem.course_name"
+                                                        id="batchDisplayName"
+                                                        v-model="editedItem.display_name"
                                                         :state="errors[0] ? false : (valid ? true : null)"
                                                         type="text"
-                                                        placeholder="Short Course Name"
+                                                        placeholder="Display Name"
                                                         ></b-form-input>
                                                         <b-form-invalid-feedback id="inputLiveFeedback">{{ errors[0] }}</b-form-invalid-feedback>
                                                     </b-form-group>
@@ -25,15 +25,15 @@
 
 
                                     <!-- col start -->
-                                        <div class="col-md-7">
-                                        <ValidationProvider  vid="full_name" rules="required" name="Course Name" v-slot="{ valid, errors  }">
-                                                    <b-form-group id="fullCourseName" label="Course Name" label-for="fullCourseName">
+                                        <div class="col-md-4">
+                                        <ValidationProvider  vid="batch_name" rules="" name="Batch Name" v-slot="{ valid, errors  }">
+                                                    <b-form-group id="batchName" label="Batch Name" label-for="batchName">
                                                         <b-form-input
-                                                        id="fullCourseName"
-                                                        v-model="editedItem.full_name"
+                                                        id="batchName"
+                                                        v-model="editedItem.batch_name"
                                                         :state="errors[0] ? false : (valid ? true : null)"
                                                         type="text"
-                                                        placeholder="Course Name"
+                                                        placeholder="Batch Name"
                                                         ></b-form-input>
                                                         <b-form-invalid-feedback id="inputLiveFeedback">{{ errors[0] }}</b-form-invalid-feedback>
                                                     </b-form-group>
@@ -41,31 +41,14 @@
                                         </div>
                                     <!-- col - end -->
                                         <div class="col-md-4">
-                                        <ValidationProvider  vid="course_code" rules="required" name="Course Code" v-slot="{ valid, errors  }">
-                                                    <b-form-group id="courseCode" label="Course Code" label-for="courseCode">
+                                        <ValidationProvider  vid="batch_code" rules="" name="Batch Code" v-slot="{ valid, errors  }">
+                                                    <b-form-group id="batchCode" label="Batch Code" label-for="batchCode">
                                                         <b-form-input
-                                                        id="courseCode"
-                                                        v-model="editedItem.course_code"
+                                                        id="batchCode"
+                                                        v-model="editedItem.batch_code"
                                                         :state="errors[0] ? false : (valid ? true : null)"
                                                         type="text"
-                                                        placeholder="Course Code"
-                                                        ></b-form-input>
-                                                        <b-form-invalid-feedback id="inputLiveFeedback">{{ errors[0] }}</b-form-invalid-feedback>
-                                                    </b-form-group>
-                                        </ValidationProvider>
-                                        </div>
-                                    <!-- col - end -->
-
-                                    <!-- col - end -->
-                                        <div class="col-md-4">
-                                        <ValidationProvider  vid="course_fee" rules="required" name="Course Fee" v-slot="{ valid, errors  }">
-                                                    <b-form-group id="courseFee" label="Course Fee" label-for="courseFee">
-                                                        <b-form-input
-                                                        id="courseFee"
-                                                        v-model="editedItem.course_fee"
-                                                        :state="errors[0] ? false : (valid ? true : null)"
-                                                        type="text"
-                                                        placeholder="Course Fee"
+                                                        placeholder="Batch Code"
                                                         ></b-form-input>
                                                         <b-form-invalid-feedback id="inputLiveFeedback">{{ errors[0] }}</b-form-invalid-feedback>
                                                     </b-form-group>
@@ -75,12 +58,12 @@
 
                                     <!-- col start -->
                                     <div class="col-md-4">
-                                        <ValidationProvider  vid="duration" rules="required" name="Duration" v-slot="{ valid, errors  }">
-                                            <b-form-group id="duration" label="Duration" label-for="duration">
+                                        <ValidationProvider  vid="batch_type" rules="" name="Batch Type" v-slot="{ valid, errors  }">
+                                            <b-form-group id="batchType" label="Batch Type" label-for="batchType">
                                                 <b-form-select
-                                                id="duration"
-                                                :options="durations"
-                                                v-model="editedItem.duration"
+                                                id="batchType"
+                                                :options="batchType"
+                                                v-model="editedItem.batch_type"
                                                 :state="errors[0] ? false : (valid ? true : null)"
                                                 type="text"
                                                 value-field="id"
@@ -88,7 +71,7 @@
                                                 aria-describedby="inputLiveFeedback"
                                                 >
                                                 <template #first>
-                                                <b-form-select-option :value="null" disabled>-- Select Duration --</b-form-select-option>
+                                                <b-form-select-option :value="null" disabled>-- Select Batch Type --</b-form-select-option>
                                                 </template>
                                                 </b-form-select>
                                                 <b-form-invalid-feedback id="inputLiveFeedback">{{ errors[0] }}</b-form-invalid-feedback>
@@ -99,7 +82,31 @@
 
                                     <!-- col start -->
                                     <div class="col-md-4">
-                                        <ValidationProvider  vid="start_date" rules="required" name="Start Date" v-slot="{ valid, errors  }">
+                                        <ValidationProvider  vid="batch_status" rules="" name="Batch Status" v-slot="{ valid, errors  }">
+                                            <b-form-group id="batchStatus" label="Batch Status" label-for="batchStatus">
+                                                <b-form-select
+                                                id="batchStatus"
+                                                :options="batchStatus"
+                                                v-model="editedItem.batch_status"
+                                                :state="errors[0] ? false : (valid ? true : null)"
+                                                type="text"
+                                                value-field="id"
+                                                text-field="name"
+                                                aria-describedby="inputLiveFeedback"
+                                                >
+                                                <template #first>
+                                                <b-form-select-option :value="null" disabled>-- Select Batch Status --</b-form-select-option>
+                                                </template>
+                                                </b-form-select>
+                                                <b-form-invalid-feedback id="inputLiveFeedback">{{ errors[0] }}</b-form-invalid-feedback>
+                                            </b-form-group>
+                                        </ValidationProvider>
+                                    </div>
+                                    <!-- col end  -->
+
+                                    <!-- col start -->
+                                    <div class="col-md-4">
+                                        <ValidationProvider  vid="start_date" rules="" name="Start Date" v-slot="{ valid, errors  }">
                                             <b-form-group label="Start Date" label-for="startDate">
                                                 <date-picker
                                                     id="startDate" 
@@ -119,10 +126,32 @@
                                         </div>
                                     <!-- col end  -->
 
+                                <!-- col start -->
+                                    <div class="col-md-4">
+                                        <ValidationProvider  vid="end_date" rules="" name="End Date" v-slot="{ valid, errors  }">
+                                            <b-form-group label="End Date" label-for="endDate">
+                                                <date-picker
+                                                    id="endDate" 
+                                                    v-model="editedItem.end_date"
+                                                    :first-day-of-week="1"
+                                                    :state="errors[0] ? false : (valid ? true : null)"
+                                                    lang="en"
+                                                    format="YYYY-MM-DD"
+                                                    :editable="false"
+                                                    value-type="format"
+                                                    confirm
+                                                    >
+                                                    </date-picker>
+                                                    <p class="text-danger small mt-1">{{ errors[0] }}</p>
+                                                </b-form-group>
+                                        </ValidationProvider>
+                                        </div>
+                                    <!-- col end  -->
+
 
                                     <!-- col start  -->
                                     <div class="col-md-4">
-                                        <ValidationProvider  vid="session" rules="required" name="Session" v-slot="{ valid, errors  }">
+                                        <ValidationProvider  vid="session" rules="" name="Session" v-slot="{ valid, errors  }">
                                             <b-form-group id="session" label="Session" label-for="session">
                                                 <b-form-select
                                                 id="session"
@@ -148,7 +177,7 @@
 
                                     <!-- col start  -->
                                     <div class="col-md-4">
-                                        <ValidationProvider  vid="standard_id" rules="required" name="Standard" v-slot="{ valid, errors  }">
+                                        <ValidationProvider  vid="standard_id" rules="" name="Standard" v-slot="{ valid, errors  }">
                                             <b-form-group id="standardId" label="Standard" label-for="standardId">
                                                 <b-form-select
                                                 id="standardId"
@@ -158,7 +187,7 @@
                                                 type="text"
                                                 value-field="id"
                                                 text-field="standard_name"
-                                                @change="getSubjectByStandard"
+                                                @change="getCourseByStandardId"
                                                 aria-describedby="inputLiveFeedback"
                                                 >
                                                 <template #first>
@@ -174,48 +203,31 @@
                                     </div>
                                             <div class="row mb-2">
                                                 <div class="col-lg-12">
-                                                    <ValidationProvider  vid="name" rules="required" name="Role Name" v-slot="{ valid, errors  }">
+                                                    <ValidationProvider  vid="courses" rules="" name="Role Name" v-slot="{ valid, errors  }">
                                                     <label class="typo__label">Select Subjects</label>
                                                         <multiselect 
                                                             :multiple="true"
-                                                            v-model="selectedSubjects"
+                                                            v-model="selectedCourses"
                                                             :close-on-select="false" 
                                                             track-by="full_name"
                                                             label="full_name" 
                                                             :state="errors[0] ? false : (valid ? true : null)" 
-                                                            :options="standardsSubjects"
+                                                            :options="activeCourses"
                                                             placeholder="Select Sebjects"
+                                                            aria-describedby="inputLiveFeedback"
                                                         >
                                                         <template slot="option" slot-scope="props">
                                                         <div class="option__desc">
-                                                        <span class="option__semster_id"> 
-                                                        {{ props.option.full_name }} - {{ props.option.semster_id }}
+                                                        <span class="option__course_name"> 
+                                                        {{ props.option.full_name }} - {{ props.option.course_code }}
                                                         </span></div>
                                                         </template>
                                                         </multiselect>
+                                                         <p class="text-danger small mt-1">{{ errors[0] }}</p>
+                                                        <b-form-invalid-feedback id="inputLiveFeedback">{{ errors[0] }}</b-form-invalid-feedback>
                                                     </ValidationProvider>
                                                 </div>
                                             </div>
-                                    <!-- <b-card v-if="standardsSubjects" class="p-2 border border-primary text-primary"  title="Select Subjects" id="nav-scroller" ref="content" style="position:relative; height:200px; overflow-y:scroll;">
-                                        <b-card-body >
-                                       
-                                            <div class="row">
-                                                <div class="col-lg-6" v-for="(sub , index ) in standardsSubjects" :key="index">
-                                                    <ValidationProvider  vid="name" rules="required" name="Role Name" v-slot="{ valid, errors  }">
-                                                        <b-form-checkbox 
-                                                        :value="sub.id"
-                                                        v-model="editedItem.subjects"          
-                                                        class="custom-checkbox custom-control-left mb-2"
-                                                        :state="errors[0] ? false : (valid ? true : null)"
-                                                        checked
-                                                        >
-                                                        {{ sub.full_name}}
-                                                        </b-form-checkbox>
-                                                    </ValidationProvider>
-                                                </div> 
-                                            </div>
-                                        </b-card-body> 
-                                    </b-card> -->
 
                                     <div class="row">
                                         <b-button variant="info" type="submit">{{ buttonLevel }}</b-button>
@@ -238,31 +250,32 @@ export default {
     components: { DatePicker , Multiselect },
     data(){
         return {
-            standardsSubjects:[],
-            buttonLevel:"Create Course",
+            activeCourses:[],
+            buttonLevel:"Create Batch",
             editedIndex: false,
-            selectedSubjects:[],
+            selectedCourses:[],
             editedItem:{
-              course_name:"",
-              full_name:"",
+              display_name:"",
+              batch_name:"",
               start_date:(new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
-              duration:null,
+              end_date:(new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
               session:null,
-              course_code:"",
-              course_fee:"",
+              batch_code:"",
+              batch_type:null,
+              batch_status:null,
               standard_id:null,
-              subjects:[],
+              courses:[],
             },
             defaultItem:{
-              course_name:"",
-              full_name:"",
+              display_name:"",
+              batch_name:"",
               start_date:(new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
-              duration:null,
+              end_date:(new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
               session:null,
-              course_code:"",
+              batch_code:"",
               course_fee:"",
               standard_id:null,
-              subjects:[],
+              courses:[],
             },
         }
     },
@@ -270,16 +283,16 @@ export default {
     mounted(){
         if(this.$route.query.id != "" && this.$route.query.id != undefined && this.$route.query.edit === true){
             this.editedIndex = true ;
-            this.buttonLevel = "Update Course" ;
+            this.buttonLevel = "Update Batch" ;
             return new Promise((resolve , reject) => {
-                Api().post(`/course/${this.$route.query.id}`)
+                Api().post(`/batch/${this.$route.query.id}`)
                 .then((response) => {
-                    this.editedItem = Object.assign({} , response.data.course );
+                    this.editedItem = Object.assign({} , response.data.data );
                     if(response){
-                        this.getSubjectByStandard();
+                        this.getCourseByStandardId();
                     } 
-                    this.editedItem.subjects = [] ;
-                    this.selectedSubjects = response.data.subjects ;
+                    this.editedItem.courses = [] ;
+                    this.selectedCourses = response.data.courses ;
                     resolve(response)
                 })
                 .catch((error) => {
@@ -290,10 +303,10 @@ export default {
     },
     computed:{
         ...mapGetters({
-            durations:'master/getDurations',
             sessions:'master/getSessions',
-            standards:'course/getActiveStandards',
-            
+            batchStatus:'master/getBatchStatus',
+            batchType:'master/getBatchTypes',
+            standards:'course/getActiveStandards',    
         }),
 
     },
@@ -309,12 +322,12 @@ export default {
     }),
 
     
-    getSubjectByStandard(){
+    getCourseByStandardId(){
         return new Promise((resolve , reject ) => {
             const id = this.editedItem.standard_id
-            Api().post(`/standard/${id}`)
+            Api().post(`/get-course-by-standard-id/${id}`)
             .then((response) => {
-                this.standardsSubjects = response.data.data
+                this.activeCourses = response.data.data
                 resolve(response)
             })
             .catch((error) => {
@@ -323,25 +336,25 @@ export default {
         })
     },
 
-    saveCourse(){
+    saveBatch(){
     
       if(this.editedIndex === true){
-            this.$refs.courseForm.validate().then((success) => {
+            this.$refs.batchForm.validate().then((success) => {
               if(!success){
                 return ;
               }
-                if(this.selectedSubjects.length > 0){
-                      const subjects = this.selectedSubjects ;
-                      for (let i = 0; i < subjects.length; i++) {
-                          const element = subjects[i].id;
-                          this.editedItem.subjects.push(element);
+                 if(this.selectedCourses.length > 0){
+                      const courses = this.selectedCourses ;
+                      for (let i = 0; i < courses.length; i++) {
+                          const element = courses[i].id;
+                          this.editedItem.courses.push(element);
                       }
                   }
               return new Promise((resolve , reject ) => {
-                  Api().patch(`/course/${this.editedItem.id}` , this.editedItem)
+                  Api().patch(`/batch/${this.editedItem.id}` , this.editedItem)
                   .then((response) => {
                     const data = response.data.data ;
-                    this.$store.commit('course/UPDATE_COURSE' , data);
+                    this.$store.commit('course/UPDATE_BATCH' , data);
                     const message = response.data.message ;
                     this.$notify({
                         group: 'foo',
@@ -349,16 +362,16 @@ export default {
                         type: 'success',
                         text: message
                       });
-                      this.buttonLevel = 'Create Course' ;
+                      this.buttonLevel = 'Create Batch' ;
                       this.editedIndex = false ;
                       this.editedItem = Object.assign({} , this.defaultItem);
-                      this.$refs.courseForm.reset();
-                      this.$router.push({path:'/course'});
+                      this.$refs.batchForm.reset();
+                      this.$router.push({path:'/batch'});
                       resolve(response);
                   })
                   .catch((error) => {
                       if(error){
-                        this.$refs.courseForm.setErrors(error.response.data.errors);
+                        this.$refs.batchForm.setErrors(error.response.data.errors);
                       }
                       reject(error)
                   });
@@ -367,21 +380,21 @@ export default {
             });
       }
       else{
-          this.$refs.courseForm.validate().then((success) => {
+          this.$refs.batchForm.validate().then((success) => {
               if(!success){
                 return ;
               }
-                  if(this.selectedSubjects.length > 0){
-                      const subjects = this.selectedSubjects ;
-                      for (let i = 0; i < subjects.length; i++) {
-                          const element = subjects[i].id;
-                          this.editedItem.subjects.push(element);
+                  if(this.selectedCourses.length > 0){
+                      const courses = this.selectedCourses ;
+                      for (let i = 0; i < courses.length; i++) {
+                          const element = courses[i].id;
+                          this.editedItem.courses.push(element);
                       }
                   }
               return new Promise((resolve , reject ) => {
-                  Api().post('/course' , this.editedItem)
+                  Api().post('/batch' , this.editedItem)
                   .then((response) => {
-                    this.$store.commit('course/ADD_COURSE' , response.data.data);
+                    this.$store.commit('course/ADD_BATCH' , response.data.data);
                     const message = response.data.message ;
                       this.$notify({
                           group: 'foo',
@@ -390,13 +403,13 @@ export default {
                           text: message
                         });
                       this.editedItem = Object.assign({} , this.defaultItem);
-                      this.$refs.courseForm.reset();
-                       this.$router.push({path:'/course'});
+                      this.$refs.batchForm.reset();
+                       this.$router.push({path:'/batch'});
                       resolve(response);
                   })
                   .catch((error) => {
                       if(error){
-                        this.$refs.courseForm.setErrors(error.response.data.errors);
+                        this.$refs.batchForm.setErrors(error.response.data.errors);
                       }
                       reject(error);
                   });
@@ -406,7 +419,9 @@ export default {
       }
     },
 
-    resetForm(){},
+    resetForm(){
+        this.$refs.batchForm.reset();
+    },
 
     }
 }

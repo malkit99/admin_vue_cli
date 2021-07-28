@@ -31,12 +31,12 @@ export default [
   },
 
     {
-        path: '/follow',
-        name: 'follow',
+        path: '/show-enquiry',
+        name: 'show-enquiry',
         meta: {
           middleware:[middleware.auth , middleware.checkPermissions ],
           permissions:['view-dashboard'],
         },
-        component: () => import('../views/dashboards/default'),
+        component: () => import('../views/lead/ShowEnquiry'),
     },
   ]

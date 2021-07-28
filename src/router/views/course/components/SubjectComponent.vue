@@ -89,7 +89,7 @@
   >
       <ValidationObserver ref="subjectForm" v-slot="{ passes}">
                     <b-form  @submit.prevent="passes(saveSubject)" @reset="resetForm" >
-                        <ValidationProvider  vid="standard_id" rules="required" name="Standard" v-slot="{ valid, errors  }">
+                      <ValidationProvider  vid="standard_id" rules="required" name="Standard" v-slot="{ valid, errors  }">
                           <b-form-select
                               id="standard"
                               :options="standards"

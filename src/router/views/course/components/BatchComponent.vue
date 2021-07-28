@@ -3,7 +3,7 @@
       <div class="col-12">
         <div class="card">
           <div class="card-body">
-            <h4 class="card-title">Courses List</h4>
+            <h4 class="card-title">Batch List</h4>
             <div class="row mt-4">
             <div class="col-sm-12 col-md-4">
                 <div id="tickets-table_length" class="dataTables_length">
@@ -41,14 +41,14 @@
               <!-- End search -->
               <!-- start button -->
                 <div class="col-sm-12 col-md-4">
-                    <b-button :to="{path:'/add-course'}" pill class="float-right m-1" variant="primary">Add Courses</b-button>
+                    <b-button :to="{path:'/add-batch'}" pill class="float-right m-1" variant="primary">Add Batch</b-button>
                 </div>
               <!-- end button -->
             </div>
             <!-- Table -->
             <div class="table-responsive mb-0">
               <b-table
-                :items="courses"
+                :items="batches"
                 :fields="fields"
                 :current-page="currentPage"
                 striped
@@ -59,7 +59,7 @@
                   {{ data.index + 1 }}
                 </template>
                 <template #cell(actions)="data">
-                    <b-link variant="primary" :to="{path:'/add-course' , query:{ id : data.item.id , edit: true}}">
+                    <b-link variant="primary" :to="{path:'/add-batch' , query:{ id : data.item.id , edit: true}}">
                     <i class="mdi mdi-pencil font-size-18 text-primary"></i>
                     </b-link>
                     <b-link variant="danger" @click="confirm(data.item)" class="ml-1">
@@ -114,11 +114,12 @@ export default {
 
     data(){
         return {
-            courseModal: false ,
             pageOptions: [2,10, 25, 50, 100],
             fields: [
                 { key: "index", sortable: true },
-                { key: "course_name", sortable: true },
+                 { key: 'display_name', label: 'Batch Name' , sortable: true},
+                 { key: 'batch_status', label: 'Status' , sortable: true},
+                 { key: 'batch_type', label: 'Type' , sortable: true},
                 { key: "Actions", sortable: false },
             ],
 
@@ -133,31 +134,6 @@ export default {
               perPage:10,
               course_name:"", 
             },
-
-            editedItem:{
-              course_name:"",
-              full_name:"",
-              start_date:(new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
-              duration:null,
-              session_id:null,
-              course_code:"",
-              course_fee:"",
-              standard_id:null,
-              subjects:[],
-
-            },
-            defaultItem:{
-              course_name:"",
-              full_name:"",
-              start_date:"",
-              end_date:"",
-              duration:null,
-              session:"",
-              course_code:"",
-              course_fee:"",
-              standard_id:"",
-              subjects:[],
-            },
         }
     },
 
@@ -169,10 +145,8 @@ export default {
 
     computed:{
         ...mapGetters({
-            durations:'master/getDurations',
-            sessions:'master/getSessions',
-            courses:'course/getCourses',
-            metas:'course/getCourseMeta',
+            batches:'course/getBatches',
+            metas:'course/getBatchMeta',
             standards:'course/getActiveStandards',
             
         }),
@@ -202,31 +176,26 @@ export default {
     },
 
     created(){
-        this.getStandards();
+        this.getBatches();
     },
 
     methods:{
         ...mapActions({
-            getCourses:'course/getAllCourses',
+            getBatches:'course/getAllBatches',
             getStandards:'course/getActiveStandards',
         }),
 
-        showCourseModal(){
-          this.courseModal = true 
-        },
-        hideCourseModal(){
-          this.courseModal = false 
-        },
+
 
         getAllList(){
           const search = {pageNumber : this.currentPage , ...this.search}
-          this.getCourses(search);
+          this.getBatches(search);
         },
 
         doSearch(){
             const pageNumber = 1 ;
             const search = {pageNumber : pageNumber , ...this.search}
-            this.getCourses(search);
+            this.getBatches(search);
         },
 
         resetSearch(){

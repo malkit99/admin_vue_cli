@@ -1,9 +1,28 @@
 export default {
 
+    SET_ALL_BATCHES(state , data ){
+        state.batches = data.data
+        state.batchMeta = data.meta
+    },
+
+
+    UPDATE_BATCH(state , data){
+        const index = state.batches.findIndex(batch => batch.id === data.id);
+        if(index !== -1){
+            state.batches.splice(index , 1 , data);
+        }  
+    },
+    ADD_BATCH(state , data){
+        state.batches = state.batches.concat(data)    
+    },
+
+
+
     SET_ALL_COURSES(state , data ){
         state.courses = data.data
         state.meta = data.meta
     },
+
 
     SET_CURRENT_PAGE(state , value){
         state.meta.current_page = value

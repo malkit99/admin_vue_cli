@@ -27,6 +27,14 @@ export default {
         return state.meta
     },
 
+    getBatches(state){
+        return state.batches 
+    },
+
+    getBatchMeta(state){
+        return state.batchMeta
+    },
+
     getCourseLinks(state){
         return state.links 
     },

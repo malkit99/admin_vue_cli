@@ -1,16 +1,16 @@
 <template>
   <Layout>
     <PageHeader :title="title" :items="items" />
-    <course-nav></course-nav>
-    <add-course-component></add-course-component>
+    <batch-nav></batch-nav>
+    <batch-component></batch-component>
   </Layout>
 </template>
 <script>
 import Layout from "../../layouts/main";
 import PageHeader from "@/components/page-header";
 import appConfig from "@/app.config";
-import CourseNav from './components/CourseNav.vue';
-import AddCourseComponent from './components/AddCourseComponent.vue';
+import BatchNav from "./components/BatchNav.vue";
+import BatchComponent from '../course/components/BatchComponent.vue';
 
 /**
  * Starter component
@@ -20,10 +20,10 @@ export default {
     title: "Starter Page",
     meta: [{ name: "description", content: appConfig.description }]
   },
-  components: { Layout, PageHeader , CourseNav, AddCourseComponent },
+  components: { Layout, PageHeader , BatchNav, BatchComponent },
   data() {
     return {
-    title: "Starter Page",
+      title: "Starter Page",
       items: [
         {
           text: "Utility",

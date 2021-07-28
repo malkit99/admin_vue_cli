@@ -93,7 +93,7 @@ export const menuItems = [
             {
                 id: 14,
                 label: "menuitems.courses.list.batch",
-                link: "/dashboard/saas",
+                link: "/batch",
                 parentId: 11
             },
             {

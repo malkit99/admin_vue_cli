@@ -48,6 +48,28 @@ export default [
       component: () => import('../views/course/Subject'),
     },
 
+    {
+      path: '/batch',
+      name: 'batch',
+      meta: {
+        middleware:[middleware.auth , middleware.checkPermissions ],
+        permissions:['view-dashboard'],
+      },
+      component: () => import('../views/course/BatchHome'),
+    },
+
+
+    
+    {
+      path: '/add-batch',
+      name: 'add-batch',
+      meta: {
+        middleware:[middleware.auth , middleware.checkPermissions ],
+        permissions:['view-dashboard'],
+      },
+      component: () => import('../views/course/AddBatch'),
+    },
+
 
 
   ]

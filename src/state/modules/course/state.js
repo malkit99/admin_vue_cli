@@ -4,6 +4,8 @@ export default {
     standardMeta:"",
     subjects:[],
     subjectMeta:"",
+    batches:[],
+    batchMeta:"",
     courses:[],
     meta:"",
 }

@@ -63,6 +63,14 @@ export default {
         return state.durations
     },
 
+    getBatchTypes(state){
+        return state.batchTypes
+    },
+
+    getBatchStatus(state){
+        return state.batchStatus
+    },
+
     getCourses(state){
         return state.courses
     },
