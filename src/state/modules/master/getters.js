@@ -67,6 +67,13 @@ export default {
         return state.batchTypes
     },
 
+    getTransactionTypes(state){
+        return state.transactionTypes
+    },
+    getBanks(state){
+        return state.banks
+    },
+
     getBatchStatus(state){
         return state.batchStatus
     },

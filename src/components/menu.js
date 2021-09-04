@@ -57,19 +57,19 @@ export const menuItems = [
         subItems: [
             {
                 id: 8,
-                label: "menuitems.students.list.lead",
-                link: "/",
+                label: "menuitems.students.list.student",
+                link: "/student",
                 parentId: 7
             },
             {
                 id: 9,
-                label: "menuitems.students.list.enquiry",
+                label: "menuitems.students.list.fee",
                 link: "/dashboard/saas",
                 parentId: 7
             },
             {
                 id: 10,
-                label: "menuitems.students.list.follow",
+                label: "menuitems.students.list.statement",
                 link: "/dashboard/crypto",
                 parentId: 7
             }

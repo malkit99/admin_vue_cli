@@ -14,6 +14,10 @@ import { ValidationProvider } from 'vee-validate/dist/vee-validate.full.esm'
 import { ValidationObserver } from 'vee-validate'
 import 'animate.css'
 import Notifications from 'vue-notification'
+import VueCropper from 'vue-cropperjs';
+import 'cropperjs/dist/cropper.css';
+import { WebCam } from "vue-web-cam"
+import Vue2Filters from 'vue2-filters'
 
 
 
@@ -53,6 +57,7 @@ if (process.env.VUE_APP_DEFAULT_AUTH === "firebase") {
 
 Vue.use(VueRouter)
 Vue.use(vco)
+Vue.use(Vue2Filters)
 Vue.use(Scrollspy);
 const VueScrollTo = require('vue-scrollto')
 Vue.use(VueScrollTo)
@@ -61,6 +66,8 @@ Vue.config.productionTip = false
 Vue.use(BootstrapVue)
 Vue.use(Vuelidate)
 Vue.use(VueMask)
+Vue.component(VueCropper);
+Vue.use(WebCam);
 Vue.prototype.$can = can
 Vue.use(require('vue-chartist'))
 Vue.use(VueSweetalert2);

@@ -6,17 +6,113 @@
         <enquiry-nav></enquiry-nav>
       </div>
     </div>
+          <!-- row start -->
+        <div class="row">
+          <!-- col start -->
+          <div class="col-lg-12">
+            <div class="accordion" role="tablist">
+              <b-card no-body>
+                <b-card-header header-tag="header" class="p-1 bg-info rounded-pill" role="tab">
+                  <b-link  v-b-toggle.accordion-2  variant="info"><i class="mdi mdi-plus text-light font-size-24"></i></b-link>
+                  <i class="mdi mdi-account-search text-light font-size-24"></i>
+                </b-card-header>
+                <b-collapse id="accordion-2" accordion="my-accordion" role="tabpanel">
+                <b-card-body>
+                  <div class="row">
+                    <div class="col-md-3">
+                       <b-form-group id="enquiryName" label="By Name" label-for="enquiryName">
+                          <b-form-input
+                          id="enquiryName"
+                          v-model="search.name"
+                          type="text"
+                          placeholder="Enter Name"
+                          ></b-form-input>
+                      </b-form-group>
+                    </div>
+                    <div class="col-md-3">
+                       <b-form-group id="mobile" label="By Phone No." label-for="mobile">
+                          <b-form-input
+                          id="mobile"
+                          v-mask="'##########'"
+                          v-model="search.mobile"
+                          type="text"
+                          placeholder="Enter Mobile"
+                          ></b-form-input>
+                      </b-form-group>
+                    </div>
+                      <div class="col-md-3">
+                       <b-form-group id="mobile" label="By Enquiry Source" label-for="mobile">
+                        <b-form-select 
+                          v-model="search.source"  
+                          text-field="name" 
+                          value-field="id" 
+                          :options="sources"
+                          >
+                          <template #first>
+                      <b-form-select-option value="" >-- Select Source --</b-form-select-option>
+                    </template>
+                    </b-form-select>
+                      </b-form-group>
+                    </div>
+
+                    <div class="col-md-3">
+                       <b-form-group id="mobile" label="By Enquiry Status" label-for="mobile">
+                        <b-form-select 
+                          v-model="search.follow_status"  
+                          text-field="name" 
+                          value-field="id" 
+                          :options="enquiryStatus"
+                          >
+                          <template #first>
+                      <b-form-select-option value="" >-- Select Source --</b-form-select-option>
+                    </template>
+                    </b-form-select>
+                      </b-form-group>
+                    </div>
+
+                    <div class="col-md-3">
+                       <b-form-group id="mobile" label="By Counselor" label-for="mobile">
+                        <b-form-select 
+                          v-model="search.assign_to"  
+                          text-field="name" 
+                          value-field="id" 
+                          :options="counselors"
+                          >
+                          <template #first>
+                      <b-form-select-option value="" >-- Select Standard --</b-form-select-option>
+                    </template>
+                    </b-form-select>
+                      </b-form-group>
+                    </div>
+
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <b-button @click="doSearch" variant="info">Search</b-button>
+                      <b-button @click="resetSearch" class="ml-2" variant="info">Reset</b-button>
+                    </div>
+                  </div>
+
+                </b-card-body>
+                </b-collapse>
+              </b-card>
+            </div>
+          </div>
+          <!-- col - end -->
+        </div>
+        <!-- row end -->
+        <!-- row start -->
         <div class="row mt-4">
             <div class="col-sm-12 col-md-4">
                 <div id="tickets-table_length" class="dataTables_length">
                   <label class="d-inline-flex align-items-center">
                     Show&nbsp;
                     <b-form-select 
-                    v-model="search.standard_id" 
+                    v-model="search.follow_status" 
                     @change="doSearch"  
-                    text-field="standard_name" 
+                    text-field="name" 
                     value-field="id" 
-                    :options="standards"
+                    :options="enquiryStatus"
                     >
                     <template #first>
                       <b-form-select-option value="" disabled>-- Select Standard --</b-form-select-option>
@@ -31,7 +127,7 @@
                   <label class="d-inline-flex align-items-center">
                     Search:
                     <b-form-input
-                      v-model="search.course_name"
+                      v-model="search.name"
                       type="search"
                       @change="doSearch"
                       placeholder="Search..."
@@ -46,111 +142,116 @@
                     <b-button :to="{path:'/add-enquiry'}" pill class="float-right m-1" variant="primary">Add Enquiry</b-button>
                 </div>
               <!-- end button -->
+        </div>
+        <!-- row end -->
+  
+        <div class="row">
+          <div class="col-lg-12">
+            <div class>
+              <div class="table-responsive">
+                <table class="table project-list-table table-nowrap table-centered table-borderless ">
+                  <thead>
+                    <tr>
+                      <th scope="col" style="width: 100px">#</th>
+                      <th scope="col">Name</th>
+                      <th scope="col">Mobile</th>
+                      <th scope="col">Enq Source</th>
+                      <th scope="col">Enquiry Status</th>
+                      <th scope="col">Status</th>
+                      <th scope="col">Assign To</th>
+                      <th scope="col">Follow Date</th>
+                      <th scope="col">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for="(item , index) in enquiries" :key="index" >
+                      <td>
+                        {{ index+1}}
+                      </td>
+                        <td>
+                        <h5 class="text-truncate font-size-14">
+                          <b-link @click="followEnquiryModel(item)">{{ item.name }}</b-link>
+                        </h5>
+                      </td>
+                      <td>
+                        <h5 class="text-truncate font-size-14">
+                          {{ item.mobile }}
+                        </h5>
+                      </td>
+                    
+
+                      <td>
+                        <h5 class="text-truncate font-size-14">
+                          {{ item.source }}
+                        </h5>
+                      </td>
+
+                      <td>
+                        <h5 class="text-truncate font-size-14">
+                          {{ item.enquiry_status }}
+                        </h5>
+                      </td>
+
+                      <td>
+                        <h5 class="text-truncate font-size-14">
+                        <b-badge pill :variant="item.reg_status === 'Cpmpleted' ? `success` : `danger` ">{{ item.reg_status }}</b-badge>
+                        </h5>
+                      </td> 
+                      <td>
+                        <h5 class="text-truncate font-size-14">
+                        {{ item.assign_to }}
+                        </h5>
+                      </td>
+
+                      <td>
+                        <h5 class="text-truncate font-size-14">
+                          {{ item.follow_date }}
+                          <span class="text-danger">{{ item.follow_time ? item.follow_time : ""}} </span>
+                        </h5>
+                      </td>
+                      <td>
+                        <b-link variant="primary" :to="{path:'/add-student' , query:{ id : item.id , edit: true}}">
+                            <i class="mdi mdi-account-plus font-size-18 text-success"></i>
+                        </b-link>
+                        <b-link variant="primary" :to="{path:'/add-enquiry' , query:{ id : item.id , edit: true}}">
+                            <i class="mdi mdi-pencil font-size-18 text-primary"></i>
+                        </b-link>
+                        <b-link  variant="danger"  class="ml-1">
+                            <i class="mdi mdi-delete font-size-18 text-danger"></i>
+                        </b-link>
+                        <b-link variant="success" :to="{path: '/show-enquiry' , query:{id : item.id }}" class="ml-1">
+                            <i class="mdi mdi-eye font-size-18 text-warning"></i>
+                        </b-link>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
-    <div class="row">
-      <div class="col-lg-12">
-        <div class>
-          <div class="table-responsive">
-            <table class="table project-list-table table-nowrap table-centered table-borderless ">
-              <thead>
-                <tr>
-                  <th scope="col" style="width: 100px">#</th>
-                  <th scope="col">Name</th>
-                  <th scope="col">Mobile</th>
-                  <th scope="col">Enq Source</th>
-                  <th scope="col">Enquiry Status</th>
-                  <th scope="col">Status</th>
-                  <th scope="col">Assign To</th>
-                  <th scope="col">Follow Date</th>
-                  <th scope="col">Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="(item , index) in enquiries" :key="index" >
-                  <td>
-                    {{ index+1}}
-                  </td>
-                    <td>
-                    <h5 class="text-truncate font-size-14">
-                      <b-link @click="followEnquiryModel(item)">{{ item.name }}</b-link>
-                    </h5>
-                  </td>
-                  <td>
-                    <h5 class="text-truncate font-size-14">
-                      {{ item.mobile }}
-                    </h5>
-                  </td>
-                 
-
-                  <td>
-                    <h5 class="text-truncate font-size-14">
-                      {{ item.source }}
-                    </h5>
-                  </td>
-
-                  <td>
-                    <h5 class="text-truncate font-size-14">
-                      {{ item.enquiry_status }}
-                    </h5>
-                  </td>
-
-                   <td>
-                    <h5 class="text-truncate font-size-14">
-                     <b-badge pill :variant="item.reg_status === 'Cpmpleted' ? `success` : `danger` ">{{ item.reg_status }}</b-badge>
-                    </h5>
-                  </td> 
-                  <td>
-                    <h5 class="text-truncate font-size-14">
-                     {{ item.assign_to }}
-                    </h5>
-                  </td>
-
-                  <td>
-                    <h5 class="text-truncate font-size-14">
-                      {{ item.follow_date }}
-                      <span class="text-danger">{{ item.follow_time ? item.follow_time : ""}} </span>
-                    </h5>
-                  </td>
-                  <td>
-                    <b-link variant="primary" :to="{path:'/add-enquiry' , query:{ id : item.id , edit: true}}">
-                        <i class="mdi mdi-pencil font-size-18 text-primary"></i>
-                    </b-link>
-                    <b-link  variant="danger"  class="ml-1">
-                        <i class="mdi mdi-delete font-size-18 text-danger"></i>
-                    </b-link>
-                    <b-link variant="success" :to="{path: '/show-enquiry' , query:{id : item.id }}" class="ml-1">
-                        <i class="mdi mdi-eye font-size-18 text-warning"></i>
-                    </b-link>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
           </div>
         </div>
-      </div>
-    </div>
-    <!-- end row -->
+        <!-- end row -->
 
-    <div class="row">
-     <div class="col">
-      <div class="dataTables_paginate paging_simple_numbers float-right">
-        <ul class="pagination  mb-2">
-          <!-- pagination -->
-          <b-pagination 
-            v-model="currentPage" 
-            :total-rows="rows" 
-            :per-page="per_page"
-            first-text="First"
-            prev-text="Prev"
-            next-text="Next"
-            last-text="Last"
-          >
-          </b-pagination>
+        <div class="row">
+        <div class="col">
+          <div class="dataTables_paginate paging_simple_numbers float-right">
+            <ul class="pagination  mb-2">
+              <!-- pagination -->
+              <b-pagination 
+                v-model="currentPage" 
+                :total-rows="rows" 
+                :per-page="per_page"
+                first-text="First"
+                prev-text="Prev"
+                next-text="Next"
+                last-text="Last"
+              >
+              </b-pagination>
 
-        </ul>
-      </div>
-    </div>
-    </div>
+            </ul>
+          </div>
+        </div>
+        </div>
     <!-- end row -->
 
     <!-- enquiry follow-up model start heree -->
@@ -165,6 +266,8 @@
       hide-footer
     >
       <div class="container">
+        <!-- row start -->
+        <h6 class="text-primary">Enquiry Detail</h6>
           <div class="row">
             <div class="col-lg-12">
              <table class="table table-bordered">
@@ -189,11 +292,41 @@
              </table>
             </div>
           </div>
+        <!-- row end -->
+
+        <!-- row start -->
+          <div class="row" >
+            <!-- col start -->
+              <div class="col-lg-12">
+                <div class="accordion" role="tablist">
+                  <b-card no-body>
+                    <b-card-header header-tag="header" class="p-1" role="tab">
+                                <b-button block v-b-toggle.accordion-1 variant="info">Feedback Detail</b-button>
+                    </b-card-header>
+                    <b-collapse id="accordion-1" accordion="my-accordion" role="tabpanel">
+                    <b-card-body id="nav-scroller" ref="content" style="position:relative; height:100px; overflow-y:scroll;" >
+                        <div v-for="(follow , index ) in followDetail.follows" :key="index">
+                          {{ index+1}}.
+                            <b-badge pill variant="danger"><span></span>Created-at -: {{ follow.recorded }}</b-badge>
+                            <b-badge pill variant="light" class="ml-2">Follow Date  -: {{ follow.follow_date }} <span class="text-danger" >by: {{follow.feedback_by}}</span></b-badge>
+                            <b-badge pill variant="light" class="ml-2">Follow-Status -: {{ follow.follow_status }} <span class="text-danger" >Follow-Type: {{follow.follow_type}}</span></b-badge>
+                            <b-badge pill variant="primary" class="ml-2">Regin -: {{ follow.regin }}</b-badge>
+                            <p class="text-primary ml-4">{{ follow.feedback}}</p>
+                        </div>
+                    </b-card-body>
+                    </b-collapse>
+                  </b-card>
+                </div>
+              </div>
+            <!-- col end -->
+          </div>
+
+        <!-- row end -->
 
           <ValidationObserver ref="followForm" v-slot="{ passes}">
               <b-form  @submit.prevent="passes(saveFollow)" @reset="resetForm" >
                   <!-- row start -->
-                    <h5 class="text-primary">Next Follow Update </h5>
+                    <h6 class="text-primary">Next Follow Detail </h6>
                   <div class="row">
                     <!-- col-start -->
                   <div class="col-md-6">
@@ -389,28 +522,7 @@
           
               </b-form>
           </ValidationObserver>
-          <!-- row start -->
-          <div class="row">
-            <!-- col start -->
-              <div class="col-lg-12">
-                <div class="accordion" role="tablist">
-                  <b-card>
-                    <b-card-header header-tag="header" class="p-1" role="tab">
-                                <b-button block v-b-toggle.accordion-1 variant="info">Feedback Detail</b-button>
-                    </b-card-header>
-                    <b-collapse id="accordion-1"  accordion="my-accordion" role="tabpanel">
-                    <b-card-body>
-                      <h1>hello</h1>
-                    </b-card-body>
-                    </b-collapse>
-
-                  </b-card>
-                </div>
-              </div>
-            <!-- col end -->
-          </div>
-
-          <!-- row end -->
+    
       </div>
 
     
@@ -453,8 +565,21 @@ export default {
       enquiryFollowUp:false,
       followDetail:{},
       search:{
-        standard_id : "",
+        follow_type : "",
+        follow_status:"",
         name:"",
+        mobile:"",
+        source:"",
+        assign_to:"",
+      },
+
+      emptySearch:{
+        follow_type : "",
+        follow_status:"",
+        name:"",
+        mobile:"",
+        source:"",
+        assign_to:"",
       },
       follow:{
         id:"",
@@ -494,6 +619,7 @@ computed:{
           counselors:'master/getCounselors',
           followTypes:'master/getFollowType',
           enquiryStatus:'master/getEnquiryStatus',
+          sources:'master/getSources',
         }),
        currentPage: {
             get() {
@@ -512,7 +638,7 @@ computed:{
         },
 
         rows() {
-            return this.metas.last_page
+            return this.metas.total
         }
 },
 
@@ -524,6 +650,10 @@ computed:{
     ...mapActions({
       getAllEnquiries:'enquiry/getAllEnquiries',
     }),
+
+    getFollows(){
+      alert('aok');
+    },
 
     followEnquiryModel(item){
       this.followDetail = Object.assign({} , item );
@@ -578,8 +708,13 @@ computed:{
   },
 
    doSearch() {
-      const data = { pageNumber: this.currentPage , ...this.search}
-      this.getAllEnquiries(data)
+      const search = { pageNumber: this.currentPage , ...this.search}
+      this.getAllEnquiries(search)
+    },
+
+    resetSearch() {
+      this.search = Object.assign({} , this.emptySearch)
+      this.getAllList()
     },
 }
 };

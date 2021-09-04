@@ -12,6 +12,21 @@ export default {
             })
         })
     },
+
+    getAllActiveBatches({commit} , search ){
+        return new Promise((resolve , reject) => {
+            course.getActiveBatches(search)
+            .then((response) => {
+                commit('SET_ALL_ACTIVE_BATCHES' , response.data.data)
+                resolve(response);
+            })
+            .catch((error) => {
+                reject(error);
+            })
+        })
+    },
+
+
     getAllCourses({commit} , search ){
         return new Promise((resolve , reject) => {
             course.getCourses(search)

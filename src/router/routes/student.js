@@ -1,32 +1,42 @@
 import middleware from "../../middleware/index"
 export default [
     {
-      path: '/lead',
-      name: 'lead',
+      path: '/student',
+      name: 'student',
       meta: {
         middleware:[middleware.auth , middleware.checkPermissions ],
         permissions:['view-dashboard'],
       },
-      component: () => import('../views/dashboards/default'),
+      component: () => import('../views/students/StudentHome'),
     },
 
     {
-        path: '/enquiry',
-        name: 'enquiry',
+        path: '/add-student',
+        name: 'add-student',
         meta: {
           middleware:[middleware.auth , middleware.checkPermissions ],
           permissions:['view-dashboard'],
         },
-        component: () => import('../views/dashboards/default'),
+        component: () => import('../views/students/AddStudent'),
     },
 
     {
-        path: '/follow',
-        name: 'follow',
+        path: '/student-detail',
+        name: 'student-detail',
         meta: {
           middleware:[middleware.auth , middleware.checkPermissions ],
           permissions:['view-dashboard'],
         },
-        component: () => import('../views/dashboards/default'),
+        component: () => import('../views/students/ShowStudent'),
     },
+
+    {
+      path: '/student-fee-list',
+      name: 'student-fee-list',
+      meta: {
+        middleware:[middleware.auth , middleware.checkPermissions ],
+        permissions:['view-dashboard'],
+      },
+      component: () => import('../views/students/StudentFeeList'),
+  },
   ]

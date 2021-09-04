@@ -5,6 +5,10 @@ export default {
         state.batchMeta = data.meta
     },
 
+    SET_ALL_ACTIVE_BATCHES(state , data ){
+        state.activeBatches = data
+    },
+
 
     UPDATE_BATCH(state , data){
         const index = state.batches.findIndex(batch => batch.id === data.id);

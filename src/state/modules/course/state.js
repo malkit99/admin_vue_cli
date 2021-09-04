@@ -6,6 +6,7 @@ export default {
     subjectMeta:"",
     batches:[],
     batchMeta:"",
+    activeBatches:[],
     courses:[],
     meta:"",
 }

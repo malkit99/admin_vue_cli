@@ -41,7 +41,7 @@ export default {
         const creadential = {email : this.email , password: this.password };
         this.logIn(creadential)
         .then((response) => {
-          if(response.status == 200){
+          if(response){
             this.$router.push({name : 'default'});
           }
         })

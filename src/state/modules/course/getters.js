@@ -31,6 +31,10 @@ export default {
         return state.batches 
     },
 
+    getActiveBatches(state){
+        return state.activeBatches 
+    },
+
     getBatchMeta(state){
         return state.batchMeta
     },

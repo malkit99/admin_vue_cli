@@ -116,9 +116,9 @@
       "text": "Manage Student",
       "badge": "03",
       "list": {
-        "lead": "Lead",
-        "enquiry": "Enquiry",
-        "follow": "Follow-List"
+        "student": "Student",
+        "fee": "Fee List",
+        "statement": "Reports"
       }
     },
 

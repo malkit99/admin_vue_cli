@@ -13,6 +13,11 @@ export default {
         return Api().get('/batch?page='+search.pageNumber)
     },
 
+    getActiveBatches(){
+        return Api().get('/get-all-active-batches')
+    },
+    
+
     getStandards(search){
         return Api().get('/standard?page='+search.pageNumber)
     },
