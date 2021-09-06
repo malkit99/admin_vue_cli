@@ -599,10 +599,10 @@
                <!-- col-start -->
               <div class="col-md-3">
                     <ValidationProvider   rules="required|min:1" name="Installment" v-slot="{ valid, errors  }">
-                        <b-form-group id="installment" label="No. Of installment" label-for="installment">
+                        <b-form-group id="installment" label="installment Amount" label-for="installment">
                             <b-form-input
                             id="installment"
-                            v-model="editedItem.no_of_installment"
+                            v-model="editedItem.installment_amount"
                             :state="errors[0] ? false : (valid ? true : null)"
                             type="number"
                             min="1"
@@ -623,6 +623,7 @@
           </div>
           <!-- row end -->
           <!-- row start -->
+          {{ calculated_total_fee }}
           <div class="row">
             <div class="col-md-12">
                 <table class="table table-striped">
@@ -688,6 +689,7 @@ export default {
       feeInstallment:[],
       editedIndex:false,
       buttonLevel:"Save Student",
+      calculated_total_fee: "",
       commitedFeeStatus:false,
       installmentModel:false,
       title: "Starter Page",
@@ -729,6 +731,7 @@ export default {
         start_from:(new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
         repeat_months :"",
         no_of_installment:"",
+        installment_amount:"",
         enquiry_date:(new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
         assign_to:null,
       },
@@ -754,6 +757,16 @@ export default {
       batches:'course/getActiveBatches',
       durations:'master/getDurations',
     }),
+
+
+    tallyVotes() {
+      var installments = this.feeInstallment ;
+      var total = 0 ;
+      installments.forEach(element => {
+        total += parseInt(element.amount) 
+      });
+      return total ;
+    }
 
 
   },
@@ -830,26 +843,38 @@ export default {
     this.installmentModel = false ;
   },
 
+
+
   calculateInstallment(){
-    if(this.editedItem.commited_fee != "" && this.editedItem.commited_fee != 0 && this.editedItem.start_from != "" && this.editedItem.no_of_installment != "" ){
-      var commitedFee = this.editedItem.commited_fee ;
-      var repeatDays = this.editedItem.repeat_months;
-      var NumberOfInstallment = this.editedItem.no_of_installment ;
+    if(this.editedItem.commited_fee != "" && this.editedItem.commited_fee != 0 && this.editedItem.start_from != "" && this.editedItem.installment_amount != "" ){
+      var commitedFee = parseInt(this.editedItem.commited_fee) ;
+      var repeatDays = parseInt(this.editedItem.repeat_months);
+      var imstallmentAmount = parseInt(this.editedItem.installment_amount) ;
       var applyDate = moment(this.editedItem.start_from);
     this.feeInstallment = [];
-    let installment = Math.round(commitedFee / NumberOfInstallment) ;
-    this.feeInstallment.push({'payable_date': applyDate.format("yyyy-MM-DD") , 'amount' : installment});
-      for (let index = 0; index < NumberOfInstallment - 1  ; index++) {
-          var newdate = applyDate.add(repeatDays, 'M').format("yyyy-MM-DD");
-          this.feeInstallment.push({'payable_date': newdate , 'amount' : installment });
+    let no_of_installment = Math.ceil(commitedFee/imstallmentAmount) ;
+    var amount = imstallmentAmount ;
+    var balance = 0 ;
+    var newdate = this.editedItem.start_from ;
+      for (let index = 0; index < no_of_installment  ; index++) { 
+          var balanceAmount = commitedFee -  balance ;
+          if(balanceAmount >= imstallmentAmount){
+            this.feeInstallment.push({'payable_date': newdate , 'amount' : amount });
+          }
+          else if (balanceAmount < imstallmentAmount) {
+            this.feeInstallment.push({'payable_date': newdate , 'amount' : balanceAmount });
+          }
+        balance = parseInt(balance) + imstallmentAmount
+        newdate = applyDate.add(repeatDays, 'M').format("yyyy-MM-DD"); 
       }
+      this.editedItem.no_of_installment = no_of_installment ;
     }
   },
 
   resetInstallment(){
     this.feeInstallment = [];
-    this.installment.no_of_installment = "";
-    this.installment.repeat_days = "";
+    this.editedItem.installment_amount = "";
+    this.editedItem.repeat_months = "";
   },
 
 
@@ -924,6 +949,8 @@ export default {
       })
     },
 
+
+
   saveStudent(){
       if(this.editedIndex === true){
             this.$refs.studentForm.validate().then((success) => {
@@ -945,10 +972,8 @@ export default {
                   }
                 }
               return new Promise((resolve , reject ) => {
-                  Api().patch(`/enquiry/${this.editedItem.id}` , this.editedItem)
+                  Api().patch(`/student/${this.editedItem.id}` , this.editedItem)
                   .then((response) => {
-                    const data = response.data.data ;
-                    this.$store.commit('course/UPDATE_BATCH' , data);
                     const message = response.data.message ;
                     this.$notify({
                         group: 'foo',
@@ -997,7 +1022,6 @@ export default {
                   const data = {...this.editedItem , image : this.imageUrl }
                   Api().post('/student-registration' , data)
                   .then((response) => {
-                    this.$store.commit('course/ADD_BATCH' , response.data.data);
                     const message = response.data.message ;
                       this.$notify({
                           group: 'foo',

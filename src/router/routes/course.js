@@ -70,6 +70,26 @@ export default [
       component: () => import('../views/course/AddBatch'),
     },
 
+    {
+      path: '/add-fee-structure',
+      name: 'add-fee-structure',
+      meta: {
+        middleware:[middleware.auth , middleware.checkPermissions ],
+        permissions:['view-dashboard'],
+      },
+      component: () => import('../views/course/FeeStructure'),
+    },
+
+    {
+      path: '/add-fee-shecdule',
+      name: 'add-fee-shecdule',
+      meta: {
+        middleware:[middleware.auth , middleware.checkPermissions ],
+        permissions:['view-dashboard'],
+      },
+      component: () => import('../views/course/AddFeeShecdule'),
+    },
+
 
 
   ]

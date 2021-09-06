@@ -8,10 +8,10 @@
                  <b-card
                     no-body
                 >
-                <b-card-header class="bg-white">
+                <!-- <b-card-header class="bg-white">
                     <b-avatar :src="student.user.avatar" square size="6rem"></b-avatar>
                     <span class="ml-2 text-primary">Welcome {{student.name}}</span>
-                </b-card-header>
+                </b-card-header> -->
                     <b-list-group>
                         <b-list-group-item class="d-flex justify-content-between align-items-center">
                             <span>Name</span>
@@ -184,7 +184,7 @@ export default {
       this.editedIndex = true ;
       this.buttonLevel = "Update Enquiry";
       return new Promise((resolve , reject ) => {
-        Api().get(`/student/${this.$route.query.id}`)
+        Api().get(`/get-student-by-id/${this.$route.query.id}`)
         .then((response) => {
             const data  = response.data ;
             this.$store.commit('student/SHOW_STUDENT_BY_ID' , data)

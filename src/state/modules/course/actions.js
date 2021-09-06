@@ -66,6 +66,19 @@ export default {
         })
     },
 
+    getAllStanderedCourses({commit}){
+        return new Promise((resolve , reject) => {
+            course.getAllCourses()
+            .then((response) => {
+                commit('SET_ALL_STANDARDS_COURSES' , response.data.data)
+                resolve(response);
+            })
+            .catch((error) => {
+                reject(error);
+            })
+        })
+    },
+
     getAllSubjects({commit} , search ){
         return new Promise((resolve , reject) => {
             course.getSubjects(search)

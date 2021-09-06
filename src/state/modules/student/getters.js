@@ -22,7 +22,28 @@ export default {
     getStudentCourses(state){
         return state.courses
     },
+
+    getStudentFeeInstallments(state){
+        return state.installments
+    },
+
+    getStudentDetail(state){
+        return state.studentDetail
+    },
+
+    getShowInstallmentModal(state){
+        return state.installmentModel
+    },
+
     getInstallments(state){
         return state.installments
+    },
+
+    getStudentBatches(state){
+        return state.batches
+    },
+
+    getEnrollIdForFeePayment(state){
+        return state.enroll_id ;
     },
 }

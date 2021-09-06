@@ -38,5 +38,16 @@ export default [
         permissions:['view-dashboard'],
       },
       component: () => import('../views/students/StudentFeeList'),
-  },
+    },
+
+    
+    {
+      path: '/fee-payment-detail',
+      name: 'fee-payment-detail',
+      meta: {
+        middleware:[middleware.auth , middleware.checkPermissions ],
+        permissions:['view-dashboard'],
+      },
+      component: () => import('../views/students/PayFeeStudent'),
+    },
   ]

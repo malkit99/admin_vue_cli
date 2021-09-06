@@ -23,6 +23,10 @@ export default {
         return state.courses 
     },
 
+    getAllStanderedCourses(state){
+        return state.standeredCourses 
+    },
+
     getCourseMeta(state){
         return state.meta
     },

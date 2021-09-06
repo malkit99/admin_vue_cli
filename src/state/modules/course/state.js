@@ -8,5 +8,6 @@ export default {
     batchMeta:"",
     activeBatches:[],
     courses:[],
+    standeredCourses:[],
     meta:"",
 }

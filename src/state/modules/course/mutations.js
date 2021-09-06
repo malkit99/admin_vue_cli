@@ -27,6 +27,10 @@ export default {
         state.meta = data.meta
     },
 
+    SET_ALL_STANDARDS_COURSES(state , data){
+        state.standeredCourses = data 
+    },
+
 
     SET_CURRENT_PAGE(state , value){
         state.meta.current_page = value

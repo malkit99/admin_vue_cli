@@ -21,6 +21,9 @@ export default {
         +'&filter[before_date]='+newDate
         +'&filter[mobile]='+search.mobile
         +'&filter[name]='+search.name
+        +'&filter[enroll_id]='+search.enroll_id
+        +'&filter[batches.id]='+search.batch_id
+        +'&filter[courses.id]='+search.course_id
         )
     }
 

@@ -26,6 +26,12 @@ export default {
         return Api().get('/get-all-active-standard')
     },
 
+    getAllCourses(){
+        return Api().get('/get-all-courses')
+    },
+
+    
+
     getSubjects(search){
         return Api().get('/subject?page='+search.pageNumber)
     },
