@@ -9,6 +9,10 @@ export default {
         return Api().post('/get-active-state-by-id' , data)
     },
 
+    enquiryFormData(){
+        return Api().get('/get-enquiry-form-master-data')
+    },
+
     getActiveDistrictsById(data){
         return Api().post('/get-active-district' , data)
     },

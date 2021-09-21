@@ -23,15 +23,20 @@
                   </tbody>
               </table>
           </div>
+       
+          <div class="col-12 mb-2">
+                <div class="button-items">
+                    <b-button class="float-right" @click="addExtraInstallment" variant="primary">Add Installment</b-button>
+                </div>
+          </div>
           <div class="col-lg-12">
               <div class="accordion" role="tablist">
                 <b-card no-body>
-                    <h5 class="text-primary">Installment Detail</h5>
                     <b-card-header header-tag="header"  class="p-1 bg-info" role="tab">
-                        <b-link  v-b-toggle.accordion-2  variant="info"><i class="mdi mdi-plus text-light font-size-24"></i></b-link>
+                            <b-link  v-b-toggle.accordion-2 class="text-light"  variant="info"><h5 class="text-primary text-light p-2">Installment Detail</h5></b-link>   
                     </b-card-header>
-                    <b-collapse id="accordion-2" accordion="my-accordion" role="tabpanel">
-                        <table class="table table-bordered table-info">
+                    <b-collapse id="accordion-2" visible accordion="my-accordion" role="tabpanel">
+                        <table class="table table-bordered table-info" v-if="installments.length > 0">
                             <thead>
                                 <tr>
                                     <th>#</th>
@@ -55,17 +60,33 @@
                                 </tr>
                             </tbody>
                         </table>
+                        <div class="row" v-else >
+                            <div class="col-lg-12">
+                                <p class="text-danger text-center">There is no Data to show</p>
+                                <p class="text-center"><b-button @click="addInstallment" variant="info">Add Installment</b-button></p>
+                            </div>
+                        </div>
                     </b-collapse>
                 </b-card>
               </div>
           </div>
       </div>
+      <!-- add fee installment component start here -->
+            <fee-installment-component></fee-installment-component>  
+      <!-- add fee installment component end here -->
+
+    <!-- add extra fee installment component start here -->
+            <add-extra-fee-installment></add-extra-fee-installment> 
+      <!-- add extra fee installment component end here -->
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
+import AddExtraFeeInstallment from './AddExtraFeeInstallment.vue'
+import FeeInstallmentComponent from './FeeInstallmentComponent.vue'
 export default {
+  components: { FeeInstallmentComponent, AddExtraFeeInstallment },
     name:"FeeComponent",
     data(){
         return{}
@@ -76,6 +97,18 @@ export default {
             student:'student/getSingleStudent',
             installments:'student/getInstallments',
         }),
+    },
+
+    methods:{
+        addInstallment(){
+            this.$store.commit('student/SET_STUDENT_DETAIL' , this.student);
+            this.$store.commit('student/SHOW_FEE_INSTALLMENT_MODAL' , true);
+        },
+
+        addExtraInstallment(){
+            this.$store.commit('student/SET_STUDENT_DETAIL' , this.student);
+            this.$store.commit('student/SHOW_ADD_EXTRA_FEE_INSTALLMENT_MODAL' , true);
+        },
     },
 }
 </script>

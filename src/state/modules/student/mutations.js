@@ -37,8 +37,17 @@ export default {
     SHOW_FEE_INSTALLMENT_MODAL(state , payload){
         state.installmentModel = payload ;
     },
+
+    SHOW_ADD_EXTRA_FEE_INSTALLMENT_MODAL(state , payload){
+        state.AddExtraInstallmentModel = payload ;
+    },
+
     SET_STUDENT_DETAIL(state , item){
         state.studentDetail = item ;  
+    },
+ 
+    ADD_STUDENT_FEE_INSTALLMENT(state , data){
+        state.installments = state.installments.concat(data)
     },
 
     STUDENTS_FEE_LIST_META(state , data){
@@ -51,9 +60,9 @@ export default {
 
     SHOW_STUDENT_BY_ID(state , data){
         state.student = data.data
-        state.courses = data.courses
-        state.batches = data.batches
-        state.installments = data.installments
+        state.courses = data.data.courses
+        state.batches = data.data.batches
+        state.installments = data.data.installments
     },
 
     SET_STUDENT_FEE_DETAIL(state , data){

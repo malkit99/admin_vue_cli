@@ -35,6 +35,10 @@ export default {
         return state.installmentModel
     },
 
+    getShowExtraInstallmentModal(state){
+        return state.AddExtraInstallmentModel
+    },
+
     getInstallments(state){
         return state.installments
     },

@@ -210,7 +210,7 @@
                         </h5>
                       </td>
                       <td>
-                        <b-link variant="primary" :to="{path:'/add-student' , query:{ id : item.id , edit: true}}">
+                        <b-link variant="primary" :to="{path:'/add-student' , query:{ id : item.id , enquiryAddmission: true}}">
                             <i class="mdi mdi-account-plus font-size-18 text-success"></i>
                         </b-link>
                         <b-link variant="primary" :to="{path:'/add-enquiry' , query:{ id : item.id , edit: true}}">
@@ -310,7 +310,7 @@
                             <b-badge pill variant="danger"><span></span>Created-at -: {{ follow.recorded }}</b-badge>
                             <b-badge pill variant="light" class="ml-2">Follow Date  -: {{ follow.follow_date }} <span class="text-danger" >by: {{follow.feedback_by}}</span></b-badge>
                             <b-badge pill variant="light" class="ml-2">Follow-Status -: {{ follow.follow_status }} <span class="text-danger" >Follow-Type: {{follow.follow_type}}</span></b-badge>
-                            <b-badge pill variant="primary" class="ml-2">Regin -: {{ follow.regin }}</b-badge>
+                            <b-badge pill variant="primary" class="ml-2">Reason -: {{ follow.follow_reason ? follow.follow_reason : "N/A" }}</b-badge>
                             <p class="text-primary ml-4">{{ follow.feedback}}</p>
                         </div>
                     </b-card-body>
@@ -440,12 +440,12 @@
 
                           <!-- col start  -->
                     <div class="col-md-6">
-                      <ValidationProvider  vid="regin" rules="" name="Regin" v-slot="{ valid, errors  }">
-                        <b-form-group id="regin" label="Regin" label-for="regin">
+                      <ValidationProvider  vid="follow_reason" rules="" name="Reason" v-slot="{ valid, errors  }">
+                        <b-form-group id="Reason" label="Reason" label-for="Reason">
                             <b-form-select
-                              id="regin"
-                              :options="followTypes"
-                              v-model="follow.regin"
+                              id="Reason"
+                              :options="followReasons"
+                              v-model="follow.follow_reason"
                               :state="errors[0] ? false : (valid ? true : null)"
                               type="text"
                               value-field="id"
@@ -453,7 +453,7 @@
                               aria-describedby="inputLiveFeedback"
                             >
                             <template #first>
-                              <b-form-select-option :value="null" disabled>-- Select Regin --</b-form-select-option>
+                              <b-form-select-option :value="null" disabled>-- Select Reason --</b-form-select-option>
                             </template>
                             </b-form-select>
                             <b-form-invalid-feedback id="inputLiveFeedback">{{ errors[0] }}</b-form-invalid-feedback>
@@ -588,7 +588,7 @@ export default {
         follow_type:null,
         next_follow_time:"",
         feedback:"",
-        regin:null,
+        follow_reason:null,
         next_follow_date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
       },
 
@@ -600,7 +600,7 @@ export default {
         next_follow_time:"",
         feedback:"",
         feedback_by:"",
-        regin:null,
+        follow_reason:null,
         next_follow_date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
       },
     };
@@ -620,6 +620,7 @@ computed:{
           followTypes:'master/getFollowType',
           enquiryStatus:'master/getEnquiryStatus',
           sources:'master/getSources',
+          followReasons:'master/getFollowReasons'
         }),
        currentPage: {
             get() {
@@ -644,11 +645,13 @@ computed:{
 
   created(){
     this.getAllList();
+    this.getEnquiryFormData();
   },
 
   methods:{
     ...mapActions({
       getAllEnquiries:'enquiry/getAllEnquiries',
+      getEnquiryFormData:'master/getEnquiryFormData'
     }),
 
     getFollows(){

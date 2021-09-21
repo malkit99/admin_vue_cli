@@ -121,7 +121,7 @@
                             </b-tab>
                              <b-tab title="Fee">
                                 <b-card-text>
-                                    <h5 class="text-primary">Fee Detail</h5>
+                                    <h5 class="text-primary">Fee Detail</h5>             
                                     <fee-component></fee-component>
                                 </b-card-text>
                             </b-tab>
@@ -163,7 +163,7 @@ export default {
     title: "Starter Page",
     meta: [{ name: "description", content: appConfig.description }]
   },
-  components: { Layout, PageHeader , CourseComponent, FeeComponent},
+  components: { Layout, PageHeader , CourseComponent, FeeComponent, },
   data() {
     return {
       title: "Starter Page",
@@ -202,6 +202,10 @@ export default {
       ...mapGetters({
           student:'student/getSingleStudent',
       }),
+  },
+
+  methods:{
+
   },
   
 };

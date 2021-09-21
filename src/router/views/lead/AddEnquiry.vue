@@ -111,8 +111,8 @@
                                                       v-model="editedItem.gender"
                                                       :state="errors[0] ? false : (valid ? true : null)"
                                                       type="text"
-                                                      value-field="name"
-                                                      text-field="name"
+                                                      value-field="type"
+                                                      text-field="type"
                                                       aria-describedby="inputLiveFeedback"
                                                     >
                                                     <template #first>
@@ -590,7 +590,7 @@
                                     <b-form-group id="comment" label="Comment" label-for="comment">
                                       <textarea
                                         id="comment"
-                                        v-model="editedItem.comments"
+                                        v-model="editedItem.comment"
                                         class="form-control"
                                         :maxlength="225"
                                         :state="errors[0] ? false : (valid ? true : null)"
@@ -751,6 +751,7 @@ export default {
 
   created(){
     this.getActiveCountry();
+    this.getEnquiryFormData();
     this.getStandards();
     this.firstRefrredBy();
     this.firstAssignTo();
@@ -764,6 +765,7 @@ export default {
       getActiveStatesById:'master/getActiveStatesById',
       getActiveDistrictById:'master/getActiveDistrictById',
       getStandards:'course/getActiveStandards',
+      getEnquiryFormData:'master/getEnquiryFormData'
     }),
 
   firstAssignTo(){

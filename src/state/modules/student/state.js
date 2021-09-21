@@ -9,5 +9,6 @@ export default {
     studentsMeta:{},
     studentsFeeListMeta:{},
     installmentModel: false ,
+    AddExtraInstallmentModel:false,
     enroll_id : null,
 }

@@ -103,6 +103,15 @@
                         <td>{{ student.remaining_fee ? student.remaining_fee : 0 | currency( '₹ ', 0 , { spaceBetweenAmountAndSymbol: true })}}</td>
                         </tr>
 
+                        <tr>
+                        <th >Additional Amount</th>
+                        <td>{{ student.total_additional_amount ? student.total_additional_amount : 0 | currency( '₹ ', 0 , { spaceBetweenAmountAndSymbol: true })}}</td>
+                            <th>Paid Add. Amount</th>
+                        <td>{{ student.paid_additional_amount ? student.paid_additional_amount : 0 | currency( '₹ ', 0 , { spaceBetweenAmountAndSymbol: true })}}</td>
+                            <th>Remaining Add. Amount</th>
+                        <td>{{ student.balance_additional_amount ? student.balance_additional_amount : 0 | currency( '₹ ', 0 , { spaceBetweenAmountAndSymbol: true })}}</td>
+                        </tr>
+
                         <tr v-for="batch in batches " :key="batch.id">
                         <th >Batch</th>
                         <td colspan="5">{{ batch.batch_name ? batch.batch_name : "N/A"}}</td>
@@ -148,8 +157,12 @@
                                     <b-button size="sm" @click="info(row.item, row.index, $event.target)" class="mr-1">
                                     Fee Receipt
                                     </b-button>
-                                    <b-button variant="primary" :disabled="row.item.btn_status" size="sm" @click="showFeePaymentModal(row.item)">
+                                    <b-button variant="primary" class="ml-2" :disabled="row.item.btn_status" size="sm" @click="showFeePaymentModal(row.item)">
                                     {{ row.item.status }}
+                                    </b-button>
+
+                                    <b-button variant="danger" class="ml-2" :disabled="row.item.btn_status" v-if="row.item.feeInstallmentStatus === true " size="sm" @click="showFeePaymentModal(row.item)">
+                                        Delete
                                     </b-button>
                                 </template>
                                 <template slot="empty">

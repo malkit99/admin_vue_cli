@@ -39,4 +39,19 @@ export default {
         })
     },
 
+    getEnquiryFormData({ commit } , data){
+        return new Promise((resolve , reject ) => {
+            master.enquiryFormData(data)
+            .then((response) => {
+                commit('SET_ENQUIRY_FORM_DATA' , response.data )
+                resolve(response);
+            })
+            .catch((error) => {
+                reject(error)
+            })
+        })
+    },
+
+    
+
 }

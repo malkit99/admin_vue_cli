@@ -74,6 +74,15 @@ export default {
         return state.banks
     },
 
+    getInstallmentTypes(state){
+        return state.installmentTypes
+    },
+
+    
+    getFollowReasons(state){
+        return state.followReasons
+    },
+
     getBatchStatus(state){
         return state.batchStatus
     },

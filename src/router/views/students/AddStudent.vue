@@ -19,6 +19,29 @@
                                     <h6 class="text-primary">Add Student Basic Details <span class="text-danger">(* Field is Required )</span></h6>
                                       <div class="row">
                                         <!-- col start -->
+                                          <div class="col-md-6">
+                                              <ValidationProvider  vid="source" rules="required" name="source" v-slot="{ valid, errors  }">
+                                                  <b-form-group id="source" label="Enquiry Source" label-for="source">
+                                                      <b-form-select
+                                                        id="source"
+                                                        :options="sources"
+                                                        v-model="editedItem.source"
+                                                        :state="errors[0] ? false : (valid ? true : null)"
+                                                        type="text"
+                                                        value-field="id"
+                                                        text-field="name"
+                                                        aria-describedby="inputLiveFeedback"
+                                                      >
+                                                      <template #first>
+                                                        <b-form-select-option :value="null" disabled>-- Select Source --</b-form-select-option>
+                                                      </template>
+                                                      </b-form-select>
+                                                      <b-form-invalid-feedback id="inputLiveFeedback">{{ errors[0] }}</b-form-invalid-feedback>
+                                                  </b-form-group>
+                                              </ValidationProvider>
+                                          </div>
+                                        <!-- col end -->
+                                        <!-- col start -->
                                         <div class="col-md-6">
                                           <ValidationProvider  vid="name" rules="required|min:3|max:50" name="name" v-slot="{ valid, errors  }">
                                                     <b-form-group id="name">
@@ -69,8 +92,9 @@
                                         </div>
                                         <!-- col start -->
                                         <div class="col-md-6">
-                                          <ValidationProvider  vid="email" rules="email" name="email" v-slot="{ valid, errors  }">
-                                                    <b-form-group id="mobile" label="Email Address" label-for="email">
+                                          <ValidationProvider  vid="email" rules="required|email" name="email" v-slot="{ valid, errors  }">
+                                                    <b-form-group id="email">
+                                                      <label  for="email" >Email Address<span class="text-danger"> * </span></label>
                                                         <b-form-input
                                                         id="email"
                                                         v-model="editedItem.email"
@@ -92,8 +116,8 @@
                                                         v-model="editedItem.gender"
                                                         :state="errors[0] ? false : (valid ? true : null)"
                                                         type="text"
-                                                        value-field="name"
-                                                        text-field="name"
+                                                        value-field="type"
+                                                        text-field="type"
                                                         aria-describedby="inputLiveFeedback"
                                                       >
                                                       <template #first>
@@ -360,8 +384,9 @@
                                 
                                 <!-- col start -->
                                 <div class="col-md-12">
-                                    <ValidationProvider  vid="standard_id" rules="" name="standard" v-slot="{ valid, errors  }">
-                                        <b-form-group id="standard" label="Standard" label-for="standard">
+                                    <ValidationProvider  vid="standard_id" rules="required" name="standard" v-slot="{ valid, errors  }">
+                                        <b-form-group id="standard">
+                                          <label  for="standard" >Standard<span class="text-danger"> * </span></label>
                                             <b-form-select
                                               id="standard"
                                               :options="standards"
@@ -371,20 +396,19 @@
                                               value-field="id"
                                               text-field="standard_name"
                                               @change="getCourseByStandardId"
-                                              aria-describedby="inputLiveFeedback"
                                             >
                                             <template #first>
-                                              <b-form-select-option :value="null" disabled>-- Select Source --</b-form-select-option>
+                                              <b-form-select-option :value="null" disabled>-- Select Standard --</b-form-select-option>
                                             </template>
                                             </b-form-select>
-                                              <b-form-invalid-feedback id="inputLiveFeedback">{{ errors[0] }}</b-form-invalid-feedback>
+                                              <p class="text-danger small mt-1">{{ errors[0] }}</p>
                                         </b-form-group>
                                     </ValidationProvider>
                                 </div>
                                 <!-- col-start -->
                                 <div class="col-lg-12">
-                                      <ValidationProvider  vid="courses" rules="" name="Role Name" v-slot="{ valid, errors  }">
-                                        <label class="typo__label">Select Courses</label>
+                                      <ValidationProvider  vid="courses" rules="required" name="Courses" v-slot="{ valid, errors  }">
+                                        <label class="typo__label">Select Courses <span class="text-danger"> * </span></label>
                                             <multiselect 
                                                 :multiple="true"
                                                 v-model="selectedCourses"
@@ -430,13 +454,14 @@
 
                                 <!-- col-start -->
                                 <div class="col-md-12">
-                                  <ValidationProvider  vid="course_fee" rules="" name="Course Fee" v-slot="{ valid, errors  }">
-                                            <b-form-group id="courseFee" label="Course Fee" label-for="courseFee">
+                                  <ValidationProvider  vid="course_fee" rules="required" name="Course Fee" v-slot="{ valid, errors  }">
+                                            <b-form-group id="courseFee">
+                                              <label  for="courseFee" >Course Fee<span class="text-danger"> * </span></label>
                                                 <b-form-input
                                                 id="courseFee"
                                                 v-model="editedItem.course_fee"
                                                 :state="errors[0] ? false : (valid ? true : null)"
-                                                type="text"
+                                                type="number"
                                                 disabled
                                                 placeholder="Course Fee"
                                                 ></b-form-input>
@@ -464,7 +489,7 @@
                                 <div class="col-12">
                                   <div class="row">
                                     <div class="col-md-9">
-                                      <ValidationProvider  vid="commited_fee" rules="" name="Commited Fee" v-slot="{ valid, errors  }">
+                                      <ValidationProvider  vid="commited_fee" rules="required" name="Commited Fee" v-slot="{ valid, errors  }">
                                                 <b-form-group id="commitedFee">
                                                     <b-form-input
                                                     id="commitedFee"
@@ -709,6 +734,7 @@ export default {
         name:"",
         email:"",
         mobile:"",
+        source:null,
         gender:null,
         date_of_birth:"",
         qualification:null,
@@ -772,17 +798,17 @@ export default {
   },
 
   mounted(){
-    if(this.$route.query.id !== "" && this.$route.query.id !== undefined && this.$route.query.edit === true ){
+    if(this.$route.query.id !== "" && this.$route.query.id !== undefined && this.$route.query.enquiryAddmission === true ){
       this.editedIndex = true ;
-      this.buttonLevel = "Update Enquiry";
+      this.buttonLevel = "Add Student By Enquiry";
       return new Promise((resolve , reject ) => {
-        Api().get(`/enquiry/${this.$route.query.id}`)
+        Api().get(`/get-student-by-id/${this.$route.query.id}`)
         .then((response) => {
           this.editedItem = Object.assign({} , response.data.data );
           this.getCourseByStandardId();
           this.editedItem.courses = [];
-          this.selectedCourses = response.data.courses ;
-          const address = response.data.residence ;
+          this.selectedCourses = response.data.data.courses ;
+          const address = response.data.data.residence ;
             if(address.length > 0 ){
               for (let i = 0; i < 1 ; i++) {
                 this.editedItem.address_id = address[i].id;
@@ -810,6 +836,7 @@ export default {
     this.getStandards();
     this.firstRefrredBy();
     this.firstAssignTo();
+    this.getEnquiryFormData();
  
   },
 
@@ -821,6 +848,7 @@ export default {
       getActiveDistrictById:'master/getActiveDistrictById',
       getStandards:'course/getActiveStandards',
       getBatches:'course/getAllActiveBatches',
+      getEnquiryFormData:'master/getEnquiryFormData'
       
     }),
 
@@ -972,7 +1000,7 @@ export default {
                   }
                 }
               return new Promise((resolve , reject ) => {
-                  Api().patch(`/student/${this.editedItem.id}` , this.editedItem)
+                  Api().post(`/add-student-by-enquiry/${this.editedItem.id}` , this.editedItem)
                   .then((response) => {
                     const message = response.data.message ;
                     this.$notify({
@@ -981,7 +1009,7 @@ export default {
                         type: 'success',
                         text: message
                       });
-                      this.buttonLevel = 'Add Enquiry' ;
+                      this.buttonLevel = 'Add Student' ;
                       this.editedIndex = false ;
                       this.editedItem = Object.assign({} , this.defaultItem);
                       this.$refs.studentForm.reset();
